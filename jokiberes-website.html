@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jokiberes.id — Jasa Tugas Profesional</title>
+<meta name="description" content="Jasa tugas profesional untuk sekolah dan kuliah. Makalah, PPT, Word, SPSS, Desain. Cepat, rapi, confidential.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #E8192C;
+    --red-dark: #B5101F;
+    --red-light: #FF3347;
+    --red-glow: rgba(232, 25, 44, 0.25);
+    --black: #0A0A0A;
+    --black2: #111111;
+    --black3: #1A1A1A;
+    --white: #FFFFFF;
+    --gray: #888888;
+    --gray-light: #CCCCCC;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--red);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 99999;
+    transition: transform 0.1s ease;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--red);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 99998;
+    transition: transform 0.15s ease, width 0.2s, height 0.2s, opacity 0.2s;
+    opacity: 0.5;
+  }
+
+  /* LOADING SCREEN */
+  #loader {
+    position: fixed; inset: 0;
+    background: var(--black);
+    z-index: 99997;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  #loader.hidden { opacity: 0; visibility: hidden; }
+  .loader-logo {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+  }
+  .loader-logo span { color: var(--red); }
+  .loader-bar {
+    width: 200px; height: 3px;
+    background: var(--black3);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .loader-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red-dark), var(--red-light));
+    border-radius: 99px;
+    animation: loadfill 1.8s ease forwards;
+  }
+  @keyframes loadfill { from { width: 0; } to { width: 100%; } }
+  .loader-text {
+    font-size: 0.75rem;
+    color: var(--gray);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: blink 1s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 20px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 14px 5%;
+  }
+  .nav-logo {
+    font-size: 1.4rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    text-decoration: none;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--gray-light);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 2px;
+    background: var(--red);
+    transition: width 0.3s;
+    border-radius: 2px;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+  .btn-nav {
+    background: var(--red);
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem !important;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s !important;
+  }
+  .btn-nav:hover {
+    background: var(--red-light) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--red-glow);
+  }
+  .btn-nav::after { display: none !important; }
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* HERO */
+  #home {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 60% at 70% 40%, rgba(232,25,44,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,25,44,0.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 99px;
+    padding: 6px 16px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--gray-light);
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge i { color: var(--red); font-size: 0.7rem; }
+  .hero-title {
+    font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-title .accent { color: var(--red); }
+  .hero-title .underline-red {
+    position: relative;
+    display: inline-block;
+  }
+  .hero-title .underline-red::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--red), var(--red-light));
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: lineExpand 0.8s 0.8s ease forwards;
+  }
+  @keyframes lineExpand { to { transform: scaleX(1); } }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--gray);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    font-weight: 400;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-sub strong { color: var(--gray-light); font-weight: 600; }
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--red);
+    color: var(--white);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 20px var(--red-glow);
+  }
+  .btn-primary:hover {
+    background: var(--red-light);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(232,25,44,0.4);
+  }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--white);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1.5px solid var(--glass-border);
+    transition: all 0.25s ease;
+    backdrop-filter: blur(10px);
+  }
+  .btn-secondary:hover {
+    border-color: var(--red);
+    color: var(--red);
+    transform: translateY(-3px);
+    background: rgba(232,25,44,0.05);
+  }
+  .hero-stats {
+    display: flex;
+    gap: 28px;
+    margin-top: 48px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat-item { text-align: left; }
+  .stat-num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -1px;
+  }
+  .stat-num span { color: var(--red); }
+  .stat-label { font-size: 0.72rem; color: var(--gray); font-weight: 500; margin-top: 2px; }
+  .stat-divider { width: 1px; background: var(--glass-border); align-self: stretch; }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    position: relative;
+    animation: fadeUp 0.6s 0.2s ease both;
+    margin-top: -100px;
+  }
+  .hero-card-main {
+    background: var(--black3);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-card-main::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.red { background: #FF5F57; }
+  .dot.yellow { background: #FEBC2E; }
+  .dot.green { background: #28C840; }
+  .card-title { font-size: 0.8rem; color: var(--gray); margin-left: auto; }
+  .service-list { display: flex; flex-direction: column; gap: 12px; }
+  .service-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .service-item:hover {
+    border-color: rgba(232,25,44,0.3);
+    background: rgba(232,25,44,0.05);
+    transform: translateX(4px);
+  }
+  .service-icon {
+    width: 36px; height: 36px;
+    background: rgba(232,25,44,0.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--red);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .service-info { flex: 1; }
+  .service-name { font-size: 0.82rem; font-weight: 600; margin-bottom: 2px; }
+  .service-time { font-size: 0.7rem; color: var(--gray); }
+  .service-status {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+    border-radius: 99px;
+    font-weight: 600;
+  }
+  .status-ready { background: rgba(40,200,64,0.15); color: #28C840; }
+  .status-fast { background: rgba(232,25,44,0.15); color: var(--red-light); }
+
+  /* FLOATING BADGES */
+  .float-badge {
+    position: absolute;
+    background: var(--black3);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    animation: float 3s ease-in-out infinite;
+    white-space: nowrap;
+  }
+  .float-badge.b1 { top: -60px; right: 20px; animation-delay: 0s; }
+  .float-badge.b2 { top: -60px; left: 20px; animation-delay: 1s; }
+  .float-badge.b3 { bottom: -60px; left: 50%; transform: translateX(-50%); animation-delay: 2s; }
+  .float-badge i { color: var(--red); }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+  /* SECTION BASE */
+  section { padding: 100px 5%; }
+  .section-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 20px;
+  }
+  .section-label::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 12px; height: 2px;
+    background: var(--red);
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 1rem;
+    color: var(--gray);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+  .section-head { margin-bottom: 60px; }
+  .center { text-align: center; }
+  .center .section-label { padding-left: 0; }
+  .center .section-label::before { display: none; }
+  .center .section-sub { margin: 0 auto; }
+
+  /* SERVICES */
+  #services { background: var(--black2); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+  .service-card {
+    background: var(--black3);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--red-light));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  .service-card:hover { 
+    border-color: rgba(232,25,44,0.25); 
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(232,25,44,0.1);
+  }
+  .service-card:hover::after { transform: scaleX(1); }
+  .sc-icon {
+    width: 52px; height: 52px;
+    background: rgba(232,25,44,0.1);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--red);
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+  }
+  .service-card:hover .sc-icon {
+    background: rgba(232,25,44,0.2);
+    box-shadow: 0 0 20px var(--red-glow);
+  }
+  .sc-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+  .sc-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.6; margin-bottom: 16px; }
+  .sc-features { display: flex; flex-direction: column; gap: 6px; }
+  .sc-feat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: var(--gray-light);
+  }
+  .sc-feat i { color: var(--red); font-size: 0.7rem; }
+
+  /* WHY US */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  .why-card {
+    text-align: center;
+    padding: 32px 20px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    transition: all 0.3s;
+  }
+  .why-card:hover {
+    border-color: rgba(232,25,44,0.3);
+    background: rgba(232,25,44,0.04);
+    transform: translateY(-4px);
+  }
+  .why-icon {
+    width: 56px; height: 56px;
+    background: rgba(232,25,44,0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--red);
+    font-size: 1.4rem;
+    margin: 0 auto 16px;
+  }
+  .why-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+  .why-desc { font-size: 0.78rem; color: var(--gray); line-height: 1.5; }
+
+  /* REVIEWS */
+  #reviews { background: var(--black); }
+  .stats-strip {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+    padding: 32px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+  }
+  .strip-stat { text-align: center; }
+  .strip-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  .strip-num .pct { color: var(--red); }
+  .strip-label { font-size: 0.75rem; color: var(--gray); margin-top: 4px; }
+
+  .testi-screenshot {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  border: 1px solid var(--glass-border);
+  cursor: zoom-in;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .testi-screenshot:hover {
+    transform: scale(1.03) translateY(-4px);
+    box-shadow: 0 12px 32px rgba(232,25,44,0.25);
+    border-color: rgba(232,25,44,0.4);
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    cursor: zoom-out;
+  }
+  .lightbox.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 14px;
+    object-fit: contain;
+    transform: scale(0.85);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,25,44,0.2);
+  }
+  .lightbox.open img {
+    transform: scale(1);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 24px; right: 28px;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s, transform 0.2s;
+    background: none;
+    border: none;
+    line-height: 1;
+  }
+  .lightbox-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+  }
+  .testimonial-slider { 
+  position: relative; 
+  overflow: hidden;
+  width: 100%;
+  }
+  .testimonial-track {
+  display: flex;
+  gap: 24px;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  }
+  .testi-card {
+    min-width: 100%;
+    background: var(--black3);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 28px;
+    flex-shrink: 0;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .testi-card::before {
+    content: '"';
+    position: absolute;
+    top: 16px; right: 24px;
+    font-size: 5rem;
+    color: rgba(232,25,44,0.1);
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .testi-stars { color: #FFD700; font-size: 0.85rem; margin-bottom: 14px; letter-spacing: 2px; }
+  .testi-text { font-size: 0.88rem; color: var(--gray-light); line-height: 1.7; margin-bottom: 20px; }
+  .testi-user { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--red-dark), var(--red-light));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .testi-name { font-weight: 600; font-size: 0.88rem; }
+  .testi-role { font-size: 0.72rem; color: var(--gray); margin-top: 2px; }
+  .testi-service {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: rgba(232,25,44,0.15);
+    color: var(--red-light);
+    font-weight: 600;
+  }
+  .slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 36px;
+  }
+  .slider-btn {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid var(--glass-border);
+    background: var(--glass);
+    color: var(--white);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .slider-btn:hover {
+    border-color: var(--red);
+    background: rgba(232,25,44,0.1);
+    color: var(--red);
+  }
+  .slider-dots { display: flex; gap: 6px; }
+  .dot-indicator {
+    width: 6px; height: 6px;
+    border-radius: 99px;
+    background: var(--glass-border);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .dot-indicator.active { background: var(--red); width: 24px; }
+
+  /* FAQ */
+  #faq { background: var(--black2); }
+  .faq-grid { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: var(--black3);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .faq-item.active { border-color: rgba(232,25,44,0.3); }
+  .faq-q {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.92rem;
+    user-select: none;
+  }
+  .faq-arrow {
+    color: var(--gray);
+    transition: transform 0.3s, color 0.3s;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+  }
+  .faq-item.active .faq-arrow { transform: rotate(180deg); color: var(--red); }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+  .faq-item.active .faq-a { max-height: 300px; }
+  .faq-a-inner { padding: 0 24px 20px; }
+
+  /* CONTACT */
+  #contact { background: var(--black); }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .contact-cta-text {
+    font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .contact-cta-text span { color: var(--red); }
+  .contact-sub { font-size: 0.9rem; color: var(--gray); line-height: 1.7; margin-bottom: 36px; }
+  .contact-channels { display: flex; flex-direction: column; gap: 14px; }
+  .channel-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.25s;
+    border: 1.5px solid transparent;
+  }
+  .channel-btn.wa { background: rgba(37,211,102,0.1); color: #25D366; border-color: rgba(37,211,102,0.2); }
+  .channel-btn.wa:hover { background: rgba(37,211,102,0.2); transform: translateX(6px); box-shadow: 0 8px 24px rgba(37,211,102,0.15); }
+  .channel-btn.tk { background: rgba(255,255,255,0.05); color: #ffffff; border-color: rgba(255,255,255,0.15); }
+  .channel-btn.tk:hover { background: rgba(255,255,255,0.1); transform: translateX(6px); }
+  .channel-btn.ig { background: rgba(225,48,108,0.1); color: #E1306C; border-color: rgba(225,48,108,0.2); }
+  .channel-btn.ig:hover { background: rgba(225,48,108,0.2); transform: translateX(6px); }
+  .channel-btn.em { background: rgba(255,193,7,0.1); color: #FFC107; border-color: rgba(255,193,7,0.2); }
+  .channel-btn.em:hover { background: rgba(255,193,7,0.2); transform: translateX(6px); }
+  .channel-icon { font-size: 1.3rem; }
+
+  /* FORM */
+  .contact-form {
+    background: var(--black3);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-form::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--red-light), transparent);
+  }
+  .form-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 24px; }
+  .form-group { margin-bottom: 18px; }
+  .form-label { font-size: 0.78rem; color: var(--gray); font-weight: 600; letter-spacing: 0.5px; margin-bottom: 8px; display: block; text-transform: uppercase; }
+  .form-input {
+    width: 100%;
+    background: var(--glass);
+    border: 1.5px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--red); background: rgba(232,25,44,0.04); }
+  .form-input::placeholder { color: var(--gray); }
+  select.form-input option { background: var(--black3); }
+  .btn-submit {
+    width: 100%;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    margin-top: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .btn-submit:hover { background: var(--red-light); transform: translateY(-2px); box-shadow: 0 12px 32px var(--red-glow); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black2);
+    border-top: 1px solid var(--glass-border);
+    padding: 48px 5% 32px;
+  }
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto 40px;
+  }
+  .footer-brand-name { font-size: 1.3rem; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 12px; }
+  .footer-brand-name span { color: var(--red); }
+  .footer-brand-desc { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+  .footer-col-title { font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white); margin-bottom: 16px; }
+  .footer-links { display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { font-size: 0.82rem; color: var(--gray); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--red); }
+  .social-links { display: flex; gap: 12px; margin-top: 20px; }
+  .social-btn {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+  .social-btn:hover { background: rgba(232,25,44,0.1); color: var(--red); border-color: rgba(232,25,44,0.3); }
+  .footer-bottom {
+    border-top: 1px solid var(--glass-border);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .footer-copy { font-size: 0.78rem; color: var(--gray); }
+  .footer-disclaimer { font-size: 0.72rem; color: var(--gray); max-width: 400px; text-align: right; }
+
+  /* FLOATING WA */
+  .wa-float {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    z-index: 999;
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 1.6rem;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+    transition: all 0.3s;
+    animation: pulse-wa 2s ease-in-out infinite;
+  }
+  .wa-float:hover { transform: scale(1.1); box-shadow: 0 16px 40px rgba(37,211,102,0.5); }
+  @keyframes pulse-wa {
+    0%,100%{ box-shadow: 0 8px 24px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0.4); }
+    70%{ box-shadow: 0 8px 24px rgba(37,211,102,0.4), 0 0 0 12px rgba(37,211,102,0); }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* MOBILE NAV */
+  @media (max-width: 900px) {
+    .nav-links { display: none; flex-direction: column; gap: 24px; position: absolute; top: 100%; left: 0; right: 0; background: rgba(10,10,10,0.98); backdrop-filter: blur(20px); padding: 32px 5%; border-bottom: 1px solid var(--glass-border); }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .hero-stats { gap: 16px; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .footer-disclaimer { text-align: left; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 70px 5%; }
+    .services-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr 1fr; }
+    .stats-strip { gap: 24px; }
+    .testi-card { min-width: 280px; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .footer-disclaimer { text-align: center; max-width: 100%; }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+    .why-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .why-card:last-child {
+      grid-column: 1 / -1;
+      max-width: 180px;
+      margin: 0 auto;
+    }
+    .screenshot-gallery {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 10px !important;
+    }
+    .testi-screenshot {
+      height: 140px;
+    }
+    .testimonial-track {
+      flex-direction: column;
+      transform: none !important;
+      gap: 16px;
+    }
+    .testi-card {
+      min-width: unset;
+      width: 100%;
+    }
+    .slider-controls {
+      display: none;
+    }
+    .footer-inner { 
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    }
+    .footer-inner > div:first-child {
+    grid-column: 1 / -1;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">Joki<span>beres</span>.id</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  <div class="loader-text">Loading...</div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">Joki<span>beres</span>.id</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://wa.me/6285784745749?text=Halo%20Jokiberes.id!%20%F0%9F%91%8B%0A%0ASaya%20mau%20*ORDER*%20jasa%20tugas.%0A%0A%F0%9F%93%8B%20*Detail%20Order%3A*%0A%E2%80%A2%20Nama%20%20%20%20%20%20%20%20%20%20%3A%20%5BNama%20kamu%5D%0A%E2%80%A2%20Jenis%20Tugas%20%20%3A%20%5BContoh%3A%20Makalah%2C%20PPT%2C%20SPSS%5D%0A%E2%80%A2%20Tema%2FJudul%20%20%20%3A%20%5BJudul%20atau%20tema%20tugas%5D%0A%E2%80%A2%20Halaman%20%20%20%20%20%3A%20%5BEstimasi%20jumlah%20halaman%5D%0A%E2%80%A2%20Deadline%20%20%20%20%20%3A%20%5BTanggal%20deadline%5D%0A%E2%80%A2%20Referensi%20%20%20%3A%20%5BAda%20%2F%20Tidak%20ada%5D%0A%E2%80%A2%20Keterangan%20%20%3A%20%5BDetail%20tambahan%20lainnya%5D%0A%0AMohon%20info%20harga%20dan%20ketersediaan.%20Terima%20kasih!%20%F0%9F%99%8F" class="btn-nav" target="_blank">Order Sekarang</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fas fa-circle"></i> Trusted — 250+ Tugas Selesai</div>
+      <h1 class="hero-title">
+        Tugas Numpuk?<br>
+        <span class="underline-red accent">Kami</span><br>
+        Siap Bantu Sampai<br>
+        <span class="accent">Beres.</span>
+      </h1>
+      <p class="hero-sub">
+        Jasa tugas profesional untuk <strong>sekolah dan kuliah</strong>.<br>
+        Cepat, rapi, revisi aman, dan pastinya <strong>confidential</strong>.
+      </p>
+      <div class="hero-btns">
+        <a href="https://wa.me/6285784745749?text=Halo%20Jokiberes.id!%20%F0%9F%91%8B%0A%0ASaya%20ingin%20konsultasi%20mengenai%20jasa%20tugas.%0A%0A%F0%9F%93%8C%20*Detail%20Pesanan%3A*%0A%E2%80%A2%20Nama%20%20%20%20%20%20%20%20%20%20%3A%20%5BNama%20kamu%5D%0A%E2%80%A2%20Jenis%20Tugas%20%20%3A%20%5BContoh%3A%20Makalah%2C%20PPT%2C%20SPSS%5D%0A%E2%80%A2%20Deadline%20%20%20%20%20%3A%20%5BTanggal%20deadline%5D%0A%E2%80%A2%20Keterangan%20%20%3A%20%5BJelaskan%20tugasnya%20singkat%5D%0A%0ATerima%20kasih!%20%F0%9F%99%8F" class="btn-primary" target="_blank">
+          <i class="fab fa-whatsapp"></i> Konsultasi Sekarang
+        </a>
+        <a href="#services" class="btn-secondary">
+          <i class="fas fa-arrow-down"></i> Lihat Layanan
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">250<span>+</span></div>
+          <div class="stat-label">Tugas Selesai</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num">500<span>+</span></div>
+          <div class="stat-label">Customer Puas</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num">4.9<span>★</span></div>
+          <div class="stat-label">Rating</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="float-badge b1"><i class="fas fa-bolt"></i> Fast Response</div>
+      <div class="float-badge b2"><i class="fas fa-clock"></i> Fleksibel</div>
+      <div class="float-badge b3"><i class="fas fa-shield-alt"></i> 100% Aman</div>
+      <div class="hero-card-main">
+        <div class="card-header">
+          <div class="dot red"></div>
+          <div class="dot yellow"></div>
+          <div class="dot green"></div>
+          <div class="card-title">Layanan Aktif</div>
+        </div>
+        <div class="service-list">
+          <div class="service-item">
+            <div class="service-icon"><i class="fas fa-file-alt"></i></div>
+            <div class="service-info">
+              <div class="service-name">Perbaikan File</div>
+              <div class="service-time">Estimasi: 1–2 hari</div>
+            </div>
+            <span class="service-status status-ready">Ready</span>
+          </div>
+          <div class="service-item">
+            <div class="service-icon"><i class="fas fa-file-powerpoint"></i></div>
+            <div class="service-info">
+              <div class="service-name">Jasa Pengerjaan Tugas</div>
+              <div class="service-time">Estimasi: &lt; 24 jam</div>
+            </div>
+            <span class="service-status status-fast">Fast</span>
+          </div>
+          <div class="service-item">
+            <div class="service-icon"><i class="fas fa-chart-bar"></i></div>
+            <div class="service-info">
+              <div class="service-name">Jasa SPSS</div>
+              <div class="service-time">Estimasi: 1–2 hari</div>
+            </div>
+            <span class="service-status status-ready">Ready</span>
+          </div>
+          <div class="service-item">
+            <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+            <div class="service-info">
+              <div class="service-name">Jasa Desain Canva</div>
+              <div class="service-time">Estimasi: &lt; 24 jam</div>
+            </div>
+            <span class="service-status status-fast">Fast</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-head reveal">
+      <div class="section-label">Layanan Kami</div>
+      <h2 class="section-title">Semua Jenis Tugas<br>Kami Tangani</h2>
+      <p class="section-sub">Dari makalah, ppt, tugas harian, perbaikan file, mendeley, zotero, SPSS dan lainya tim kami siap membantu dengan hasil berkualitas dan tepat waktu.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="sc-icon"><i class="fas fa-file-alt"></i></div>
+        <div class="sc-name">Jasa Makalah</div>
+        <div class="sc-desc">Makalah sekolah & kuliah dengan format akademik yang rapi dan siap dikumpulkan.</div>
+        <div class="sc-features">
+          <div class="sc-feat"><i class="fas fa-check"></i> Makalah sekolah & kuliah</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> Format rapi & akademik</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> Free revisi 3x</div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="sc-icon"><i class="fas fa-desktop"></i></div>
+        <div class="sc-name">Jasa PPT</div>
+        <div class="sc-desc">Presentasi desain premium, isi materi lengkap, langsung siap dipresentasikan.</div>
+        <div class="sc-features">
+          <div class="sc-feat"><i class="fas fa-check"></i> Desain premium & menarik</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> Materi lengkap & terstruktur</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> Siap presentasi</div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="sc-icon"><i class="fas fa-file-word"></i></div>
+        <div class="sc-name">Jasa Perbaikan File</div>
+        <div class="sc-desc">Penomoran halaman, daftar isi otomatis, rapihin skripsi dan dokumen Word kamu.</div>
+        <div class="sc-features">
+          <div class="sc-feat"><i class="fas fa-check"></i> Penomoran halaman otomatis</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> Daftar isi & referensi (mendeley/zotero)</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> Rapihin skripsi & laporan</div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="sc-icon"><i class="fas fa-chart-bar"></i></div>
+        <div class="sc-name">Jasa SPSS</div>
+        <div class="sc-desc">Input data, analisis statistik lengkap, dan interpretasi hasil yang mudah dipahami.</div>
+        <div class="sc-features">
+          <div class="sc-feat"><i class="fas fa-check"></i> Input & olah data</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> Analisis statistik lengkap</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> Interpretasi hasil</div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="sc-icon"><i class="fas fa-paint-brush"></i></div>
+        <div class="sc-name">Jasa Canva & Desain</div>
+        <div class="sc-desc">Poster, CV, presentasi, infografis — desain kreatif sesuai kebutuhan kamu.</div>
+        <div class="sc-features">
+          <div class="sc-feat"><i class="fas fa-check"></i> Poster & banner</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> CV profesional</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> Infografis & presentasi</div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-3" style="border-color:rgba(232,25,44,0.2);background:rgba(232,25,44,0.03);">
+        <div class="sc-icon" style="background:rgba(232,25,44,0.2);"><i class="fas fa-plus"></i></div>
+        <div class="sc-name">Tugas Lainnya?</div>
+        <div class="sc-desc">Ada tugas lain yang tidak ada di list? Konsultasikan langsung ke tim kami sekarang!</div>
+        <div class="sc-features">
+          <div class="sc-feat"><i class="fas fa-check"></i> Konsultasi gratis</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> Harga fleksibel</div>
+          <div class="sc-feat"><i class="fas fa-check"></i> Fast response</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY US -->
+    <div class="section-head center reveal" style="margin-top:80px;">
+      <div class="section-label">Kenapa Kami</div>
+      <h2 class="section-title">Kenapa Pilih Jokiberes.id?</h2>
+      <p class="section-sub">Kami hadir untuk memastikan tugasmu selesai tepat waktu tanpa ribet.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon"><i class="fas fa-bolt"></i></div>
+        <div class="why-title">Fast Response</div>
+        <div class="why-desc">Respon cepat, tidak dibiarkan pending berlama-lama.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon"><i class="fas fa-clock"></i></div>
+        <div class="why-title">Tepat Waktu</div>
+        <div class="why-desc">Pengerjaan sesuai deadline yang telah disepakati bersama.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-3">
+        <div class="why-icon"><i class="fas fa-user-secret"></i></div>
+        <div class="why-title">Confidential</div>
+        <div class="why-desc">Data dan identitas kamu 100% aman dan terjaga privasi.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon"><i class="fas fa-wallet"></i></div>
+        <div class="why-title">Harga Friendly</div>
+        <div class="why-desc">Harga terjangkau yang disesuaikan untuk kantong mahasiswa.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon"><i class="fas fa-redo"></i></div>
+        <div class="why-title">Revisi Aman</div>
+        <div class="why-desc">Tidak puas? Revisi sampai kamu 100% satisfied.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-head center reveal">
+      <div class="section-label">Testimoni</div>
+      <h2 class="section-title">Kata Mereka Tentang<br>Jokiberes.id</h2>
+      <p class="section-sub">Sudah dipercaya ratusan mahasiswa dan pelajar di seluruh Indonesia.</p>
+    </div>
+    <div class="stats-strip reveal">
+      <div class="strip-stat"><div class="strip-num"><span class="pct">95%</span></div><div class="strip-label">Customer Repeat Order</div></div>
+      <div class="strip-stat"><div class="strip-num">24/7</div><div class="strip-label">Support Aktif</div></div>
+      <div class="strip-stat"><div class="strip-num"><span class="pct">100%</span></div><div class="strip-label">Confidential</div></div>
+      <div class="strip-stat"><div class="strip-num">4.9<span class="pct">★</span></div><div class="strip-label">Rating Rata-rata</div></div>
+    </div>
+    <!-- GALERI SCREENSHOT -->
+    <div class="screenshot-gallery reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:48px;">
+      <img src="img/testi1.jpeg" alt="Testimoni" class="testi-screenshot" onclick="openLightbox(this.src)">
+      <img src="img/testi2.jpeg" alt="Testimoni" class="testi-screenshot" onclick="openLightbox(this.src)">
+      <img src="img/testi3.jpeg" alt="Testimoni" class="testi-screenshot" onclick="openLightbox(this.src)">
+      <img src="img/testi4.jpeg" alt="Testimoni" class="testi-screenshot" onclick="openLightbox(this.src)">
+    </div>
+    <div class="testimonial-slider reveal">
+      <div class="testimonial-track" id="testiTrack">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">Awalnya ragu, tapi hasilnya beneran melebihi ekspektasi. Makalah langsung dapat nilai yang bagus dan dosen puji formatnya. Pasti balik lagi!</p>
+          <div class="testi-user">
+            <div class="testi-avatar">A</div>
+            <div>
+              <div class="testi-name">Andi R.</div>
+              <div class="testi-role">Mahasiswa</div>
+              <span class="testi-service">Jasa Makalah</span>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">PPT-nya keren banget! Desainnya profesional, isi materinya lengkap. Presentasi jadi jauh lebih percaya diri. Makasih Jokiberes!</p>
+          <div class="testi-user">
+            <div class="testi-avatar">S</div>
+            <div>
+              <div class="testi-name">Sari M.</div>
+              <div class="testi-role">Mahasiswi</div>
+              <span class="testi-service">Jasa PPT</span>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">SPSS-nya selesai dalam 1 hari! Hasilnya lengkap dengan interpretasi yang mudah dipahami. Tugas skripsi jadi gampang. Recommended!</p>
+          <div class="testi-user">
+            <div class="testi-avatar">D</div>
+            <div>
+              <div class="testi-name">Dito F.</div>
+              <div class="testi-role">Mahasiswa</div>
+              <span class="testi-service">Jasa SPSS</span>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">Word-nya dirapiin dalam 3 jam! Penomoran, daftar isi, semua beres. Chat-nya juga fast respon banget. Sudah 3x order di sini.</p>
+          <div class="testi-user">
+            <div class="testi-avatar">N</div>
+            <div>
+              <div class="testi-name">Nina K.</div>
+              <div class="testi-role">Mahasiswi</div>
+              <span class="testi-service">Jasa Perbaikan File</span>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">Desain posternya keren, warnanya matching, layout profesional. Bahkan guru saya tanya beli di mana. Harga juga sangat worth it!</p>
+          <div class="testi-user">
+            <div class="testi-avatar">R</div>
+            <div>
+              <div class="testi-name">Reza P.</div>
+              <div class="testi-role">Siswa</div>
+              <span class="testi-service">Jasa Desain</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-controls">
+        <button class="slider-btn" onclick="slideTesti(-1)"><i class="fas fa-chevron-left"></i></button>
+        <div class="slider-dots" id="sliderDots"></div>
+        <button class="slider-btn" onclick="slideTesti(1)"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-head center reveal">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Pertanyaan yang Sering Ditanyakan</h2>
+      <p class="section-sub">Masih ragu? Ini jawaban dari pertanyaan yang paling sering ditanyakan.</p>
+    </div>
+    <div class="faq-grid reveal">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Apakah jasa ini aman dan terjaga privasinya?</span>
+          <i class="fas fa-chevron-down faq-arrow"></i>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Tentu! Kami menjamin 100% kerahasiaan identitas dan data kamu. Tidak ada informasi yang akan disebarkan ke pihak manapun. Semua transaksi dan komunikasi terjaga dengan aman.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Apakah bisa revisi jika hasilnya tidak sesuai?</span>
+          <i class="fas fa-chevron-down faq-arrow"></i>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Bisa! Kami menyediakan layanan revisi gratis sampai kamu puas dengan hasilnya. Kepuasan kamu adalah prioritas utama kami. Tinggal hubungi tim kami dan jelaskan bagian yang perlu direvisi.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Berapa lama waktu pengerjaannya?</span>
+          <i class="fas fa-chevron-down faq-arrow"></i>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Tergantung jenis dan kompleksitas tugas. Untuk desain bisa selesai dalam 12–24 jam, PPT 1–2 hari, Makalah 1–3 hari, SPSS 1–2 hari. Deadline spesifik bisa didiskusikan saat konsultasi.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Bisa dadakan atau mendesak?</span>
+          <i class="fas fa-chevron-down faq-arrow"></i>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Bisa! Kami menerima pengerjaan dadakan dengan menyesuaikan urgensi. Tim kami selalu aktif sesuai dengan jam kerja, jadi tidak perlu khawatir. Untuk tugas mendesak, langsung chat WhatsApp kami ya!</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Bagaimana cara pembayarannya?</span>
+          <i class="fas fa-chevron-down faq-arrow"></i>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Kami menerima berbagai metode pembayaran: transfer bank BRI dan BSI, Qris, Seabank, DANA dan Shopepay. Pembayaran dilakukan 50% setelah deal harga dan sebelum pengerjaan dimulai.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="section-label">Hubungi Kami</div>
+      <h2 class="contact-cta-text">Siap Bantu Tugas<br>Kamu <span>Sekarang!</span></h2>
+      <p class="contact-sub">Jangan tunda lagi! Konsultasikan tugasmu sekarang dan dapatkan solusi terbaik dengan harga yang terjangkau.</p>
+      <div class="contact-channels">
+        <a href="https://wa.me/6285784745749?text=Halo%20Jokiberes.id!%20%F0%9F%91%8B%0A%0ASaya%20ingin%20konsultasi%20mengenai%20jasa%20tugas.%0A%0A%F0%9F%93%8C%20*Detail%20Pesanan%3A*%0A%E2%80%A2%20Nama%20%20%20%20%20%20%20%20%20%20%3A%20%5BNama%20kamu%5D%0A%E2%80%A2%20Jenis%20Tugas%20%20%3A%20%5BContoh%3A%20Makalah%2C%20PPT%2C%20SPSS%5D%0A%E2%80%A2%20Deadline%20%20%20%20%20%3A%20%5BTanggal%20deadline%5D%0A%E2%80%A2%20Keterangan%20%20%3A%20%5BJelaskan%20tugasnya%20singkat%5D%0A%0ATerima%20kasih!%20%F0%9F%99%8F" class="channel-btn wa" target="_blank">
+          <i class="fab fa-whatsapp channel-icon"></i>
+          <div>
+            <div style="font-size:0.95rem;">Chat via WhatsApp</div>
+            <div style="font-size:0.75rem;opacity:0.7;font-weight:400;">Online — Fast Response</div>
+          </div>
+          <i class="fas fa-arrow-right" style="margin-left:auto;"></i>
+        </a>
+        <a href="https://www.tiktok.com/@jokiberesid" class="channel-btn tk" target="_blank">
+          <i class="fab fa-tiktok channel-icon"></i>
+          <div>
+            <div style="font-size:0.95rem;">Follow TikTok</div>
+            <div style="font-size:0.75rem;opacity:0.7;font-weight:400;">@jokiberesid — Tips & Promo</div>
+          </div>
+          <i class="fas fa-arrow-right" style="margin-left:auto;"></i>
+        </a>
+        <a href="https://www.instagram.com/jokiberes.1d" class="channel-btn ig" target="_blank">
+          <i class="fab fa-instagram channel-icon"></i>
+          <div>
+            <div style="font-size:0.95rem;">Follow Instagram</div>
+            <div style="font-size:0.75rem;opacity:0.7;font-weight:400;">@jokiberes.1d — Portofolio & Info</div>
+          </div>
+          <i class="fas fa-arrow-right" style="margin-left:auto;"></i>
+        </a>
+        <a href="https://mail.google.com/mail/?view=cm&to=jokiberesid@gmail.com&su=Konsultasi%20Tugas%20Jokiberes.id" class="channel-btn em" target="_blank">
+          <i class="fas fa-envelope channel-icon"></i>
+          <div>
+            <div style="font-size:0.95rem;">Kirim Email</div>
+            <div style="font-size:0.75rem;opacity:0.7;font-weight:400;">jokiberesid@gmail.com</div>
+          </div>
+          <i class="fas fa-arrow-right" style="margin-left:auto;"></i>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form reveal reveal-delay-2">
+      <div class="form-title">Form Konsultasi Cepat</div>
+      <div class="form-group">
+        <label class="form-label">Nama Kamu</label>
+        <input type="text" class="form-input" placeholder="Masukkan nama kamu..." id="fname">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Jenis Tugas</label>
+        <select class="form-input" id="ftask">
+          <option value="">Pilih jenis tugas...</option>
+          <option>Joki Makalah</option>
+          <option>Joki PPT</option>
+          <option>Joki Microsoft Word</option>
+          <option>Joki SPSS</option>
+          <option>Joki Desain Canva</option>
+          <option>Lainnya</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Deadline</label>
+        <input type="date" class="form-input" id="fdeadline">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Keterangan Singkat</label>
+        <textarea class="form-input" rows="3" placeholder="Ceritakan sedikit tentang tugasmu..." id="fnotes" style="resize:none;"></textarea>
+      </div>
+      <button class="btn-submit" onclick="submitForm()">
+        <i class="fab fa-whatsapp"></i> Kirim via WhatsApp
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">Joki<span>beres</span>.id</div>
+      <div class="footer-brand-desc">Jasa tugas profesional untuk pelajar dan mahasiswa. Cepat, rapi, confidential.</div>
+      <div class="social-links">
+        <a href="https://wa.me/6285784745749" class="social-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.tiktok.com/@jokiberesid" class="social-btn" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.instagram.com/jokiberes.1d" class="social-btn" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://mail.google.com/mail/?view=cm&to=jokiberesid@gmail.com&su=Konsultasi%20Tugas%20Jokiberes.id" class="social-btn" target="_blank"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Layanan</div>
+      <div class="footer-links">
+        <a href="#services">Jasa Makalah</a>
+        <a href="#services">Jasa PPT</a>
+        <a href="#services">Jasa Word</a>
+        <a href="#services">Jasa SPSS</a>
+        <a href="#services">Jasa Desain</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigasi</div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Kontak</div>
+      <div class="footer-links">
+        <a href="#">WhatsApp</a>
+        <a href="#">TikTok</a>
+        <a href="#">Instagram</a>
+        <a href="#">Email</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Jokiberes.id — All Rights Reserved</div>
+    <div class="footer-disclaimer">Website ini hanya sebagai media promosi jasa. Semua transaksi dilakukan dengan persetujuan kedua pihak.</div>
+  </div>
+</footer>
+
+<!-- FLOATING WA -->
+<a href="https://wa.me/6285784745749?text=Halo%20Jokiberes.id!%20%F0%9F%91%8B%0A%0ASaya%20mau%20*ORDER*%20jasa%20tugas.%0A%0A%F0%9F%93%8B%20*Detail%20Order%3A*%0A%E2%80%A2%20Nama%20%20%20%20%20%20%20%20%20%20%3A%20%5BNama%20kamu%5D%0A%E2%80%A2%20Jenis%20Tugas%20%20%3A%20%5BContoh%3A%20Makalah%2C%20PPT%2C%20SPSS%5D%0A%E2%80%A2%20Tema%2FJudul%20%20%20%3A%20%5BJudul%20atau%20tema%20tugas%5D%0A%E2%80%A2%20Halaman%20%20%20%20%20%3A%20%5BEstimasi%20jumlah%20halaman%5D%0A%E2%80%A2%20Deadline%20%20%20%20%20%3A%20%5BTanggal%20deadline%5D%0A%E2%80%A2%20Referensi%20%20%20%3A%20%5BAda%20%2F%20Tidak%20ada%5D%0A%E2%80%A2%20Keterangan%20%20%3A%20%5BDetail%20tambahan%20lainnya%5D%0A%0AMohon%20info%20harga%20dan%20ketersediaan.%20Terima%20kasih!%20%F0%9F%99%8F" class="wa-float" target="_blank" title="Chat WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+  // LOADER
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('hidden');
+    }, 2000);
+  });
+
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a, button, .service-card, .why-card, .faq-q').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.width = '56px'; ring.style.height = '56px'; ring.style.opacity = '0.3'; });
+    el.addEventListener('mouseleave', () => { ring.style.width = '36px'; ring.style.height = '36px'; ring.style.opacity = '0.5'; });
+  });
+
+  // NAVBAR
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+
+  // Lightbox
+  function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // TESTIMONIAL SLIDER
+  const track = document.getElementById('testiTrack');
+  const cards = track.querySelectorAll('.testi-card');
+  const dotsContainer = document.getElementById('sliderDots');
+  let current = 0;
+  const total = cards.length;
+
+  // Init dots
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot-indicator' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsContainer.appendChild(d);
+  }
+
+  function getCardWidth() {
+    return cards[0].offsetWidth + 24;
+  }
+
+  function goTo(idx) {
+  current = (idx + total) % total;
+  const cardWidth = cards[0].offsetWidth + 24;
+  const trackWidth = track.parentElement.offsetWidth;
+  const maxScroll = track.scrollWidth - trackWidth;
+  let offset = current * cardWidth;
+  if (offset > maxScroll) offset = maxScroll;
+  track.style.transform = `translateX(-${offset}px)`;
+  document.querySelectorAll('.dot-indicator').forEach((d, i) => 
+    d.classList.toggle('active', i === current)
+  );
+  }
+
+  function slideTesti(dir) { goTo(current + dir); }
+  setInterval(() => slideTesti(1), 5000);
+
+  // FAQ
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!wasActive) item.classList.add('active');
+  }
+
+  // FORM SUBMIT
+  function submitForm() {
+    const name = document.getElementById('fname').value.trim();
+    const task = document.getElementById('ftask').value;
+    const deadline = document.getElementById('fdeadline').value;
+    const notes = document.getElementById('fnotes').value.trim();
+    if (!name || !task) { alert('Mohon isi nama dan jenis tugas terlebih dahulu!'); return; }
+    const msg = `Halo Jokiberes.id! 👋\n\nSaya mau konsultasi:\n\n• Nama: ${name}\n• Jenis Tugas: ${task}\n• Deadline: ${deadline || 'Belum ditentukan'}\n• Keterangan: ${notes || '-'}\n\nMohon info lebih lanjut, terima kasih!`;
+    window.open(`https://wa.me/6285784745749?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  // COUNTER ANIMATION
+  function animateCount(el, target, suffix='') {
+    let start = 0;
+    const duration = 2000;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const val = Math.floor(progress * target);
+      el.textContent = val + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+</script>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img id="lightboxImg" src="" alt="Screenshot Testimoni">
+  </div>
+</body>
+</html>
