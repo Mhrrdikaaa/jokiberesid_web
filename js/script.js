@@ -1,3 +1,25 @@
+  // THEME TOGGLE (Dark/Light Mode)
+  function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('jokiberes-theme', newTheme);
+  }
+
+  // Restore saved theme on load (before content renders)
+  (function() {
+    const savedTheme = localStorage.getItem('jokiberes-theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+      // Check system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    }
+  })();
+
   // LOADER
   window.addEventListener('load', () => {
     setTimeout(() => {
