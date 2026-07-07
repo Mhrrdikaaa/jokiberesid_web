@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,14 +17,14 @@
 
 <!-- LOADER -->
 <div id="loader">
-  <div class="loader-logo">Joki<span>beres</span>.id</div>
+  <div class="loader-logo">Jokiberes<span>.id</span></div>
   <div class="loader-bar"><div class="loader-bar-fill"></div></div>
   <div class="loader-text">Loading...</div>
 </div>
 
 <!-- NAVBAR -->
 <nav id="navbar">
-  <a href="#home" class="nav-logo">Joki<span>beres</span>.id</a>
+  <a href="#home" class="nav-logo">Jokiberes<span>.id</span></a>
   <ul class="nav-links" id="navLinks">
     <li><a href="#home">Home</a></li>
     <li><a href="#services">Services</a></li>
@@ -33,8 +33,14 @@
     <li><a href="#contact">Contact</a></li>
     <li><a href="https://wa.me/6285784745749?text=Halo%20Jokiberes.id!%20%F0%9F%91%8B%0A%0ASaya%20mau%20*ORDER*%20jasa%20tugas.%0A%0A%F0%9F%93%8B%20*Detail%20Order%3A*%0A%E2%80%A2%20Nama%20%20%20%20%20%20%20%20%20%20%3A%20%5BNama%20kamu%5D%0A%E2%80%A2%20Jenis%20Tugas%20%20%3A%20%5BContoh%3A%20Makalah%2C%20PPT%2C%20SPSS%5D%0A%E2%80%A2%20Tema%2FJudul%20%20%20%3A%20%5BJudul%20atau%20tema%20tugas%5D%0A%E2%80%A2%20Halaman%20%20%20%20%20%3A%20%5BEstimasi%20jumlah%20halaman%5D%0A%E2%80%A2%20Deadline%20%20%20%20%20%3A%20%5BTanggal%20deadline%5D%0A%E2%80%A2%20Referensi%20%20%20%3A%20%5BAda%20%2F%20Tidak%20ada%5D%0A%E2%80%A2%20Keterangan%20%20%3A%20%5BDetail%20tambahan%20lainnya%5D%0A%0AMohon%20info%20harga%20dan%20ketersediaan.%20Terima%20kasih!%20%F0%9F%99%8F" class="btn-nav" target="_blank">Order Sekarang</a></li>
   </ul>
-  <div class="hamburger" id="hamburger" onclick="toggleNav()">
-    <span></span><span></span><span></span>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
+      <i class="fas fa-sun icon-sun"></i>
+      <i class="fas fa-moon icon-moon"></i>
+    </button>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
   </div>
 </nav>
 
@@ -44,7 +50,7 @@
   <div class="hero-grid"></div>
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-badge"><i class="fas fa-circle"></i> Trusted — 250+ Tugas Selesai</div>
+      <div class="hero-badge"><i class="fas fa-circle"></i> Trusted — 999+ Tugas Selesai</div>
       <h1 class="hero-title">
         Tugas Numpuk?<br>
         <span class="underline-red accent">Kami</span><br>
@@ -65,7 +71,7 @@
       </div>
       <div class="hero-stats">
         <div class="stat-item">
-          <div class="stat-num">250<span>+</span></div>
+          <div class="stat-num">999<span>+</span></div>
           <div class="stat-label">Tugas Selesai</div>
         </div>
         <div class="stat-divider"></div>
@@ -189,8 +195,8 @@
           <div class="sc-feat"><i class="fas fa-check"></i> Infografis & presentasi</div>
         </div>
       </div>
-      <div class="service-card reveal reveal-delay-3" style="border-color:rgba(232,25,44,0.2);background:rgba(232,25,44,0.03);">
-        <div class="sc-icon" style="background:rgba(232,25,44,0.2);"><i class="fas fa-plus"></i></div>
+      <div class="service-card service-card-cta reveal reveal-delay-3">
+        <div class="sc-icon sc-icon-cta"><i class="fas fa-plus"></i></div>
         <div class="sc-name">Tugas Lainnya?</div>
         <div class="sc-desc">Ada tugas lain yang tidak ada di list? Konsultasikan langsung ke tim kami sekarang!</div>
         <div class="sc-features">
