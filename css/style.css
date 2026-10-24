@@ -1295,29 +1295,25 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image:
-      linear-gradient(var(--glass-border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
-    background-size: 28px 28px;
-    mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 75%);
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(5, 34, 62, 0.05) 0%, rgba(5, 34, 62, 0.45) 100%);
+    pointer-events: none;
   }
-  .blog-cover-icon {
-    position: relative;
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: var(--orange-strong);
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 10px 30px var(--accent-rgba-015);
-    backdrop-filter: blur(6px);
+  [data-theme="dark"] .blog-cover::before {
+    background: linear-gradient(180deg, rgba(13, 17, 23, 0.15) 0%, rgba(13, 17, 23, 0.6) 100%);
   }
+  .blog-cover-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .blog-card:hover .blog-cover-img { transform: scale(1.06); }
   .blog-cover-tag {
     position: absolute;
+    z-index: 2;
     top: 12px;
     left: 12px;
     font-size: 0.62rem;
@@ -1413,16 +1409,20 @@
     box-shadow: 0 20px 40px var(--card-shadow-hover);
   }
   .blog-list-cover {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: var(--orange-strong);
-    background:
-      radial-gradient(circle at 30% 30%, var(--accent-rgba-02), transparent 60%),
-      linear-gradient(135deg, var(--black2), var(--black3));
+    position: relative;
+    overflow: hidden;
+    background: var(--black3);
     border-right: 1px solid var(--glass-border);
   }
+  .blog-list-cover .blog-cover-img {
+    position: static;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .blog-list-item:hover .blog-cover-img { transform: scale(1.05); }
   .blog-list-body { padding: 24px 26px; }
   .blog-list-body .blog-card-title { font-size: 1.15rem; }
 
